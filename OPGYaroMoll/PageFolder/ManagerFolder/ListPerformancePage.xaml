@@ -1,0 +1,86 @@
+﻿<Page x:Class="OPGYaroMoll.PageFolder.ManagerFolder.ListPerformancePage"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:OPGYaroMoll.PageFolder.ManagerFolder" xmlns:Icon="http://metro.mahapps.com/winfx/xaml/iconpacks"
+      mc:Ignorable="d" 
+      d:DesignHeight="450" d:DesignWidth="800"
+      Title="Список представлений">
+
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="75"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="220"/>
+        </Grid.ColumnDefinitions>
+        <TextBox x:Name="SearchTb" Background="Transparent"
+         BorderBrush="Black"  Foreground="Black"
+             TextChanged="SearchTb_TextChanged" Cursor="Hand" Margin="12,12,12,0">
+            <TextBox.Template>
+                <ControlTemplate TargetType="TextBox">
+                    <Grid>
+                        <Border CornerRadius="10" Height="40" Margin="12" BorderBrush="Black"
+                              BorderThickness="2"
+                              Background="Transparent">
+                            <Grid>
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="30"/>
+                                    <ColumnDefinition Width="auto"/>
+                                    <ColumnDefinition/>
+                                    <ColumnDefinition Width="auto"/>
+                                </Grid.ColumnDefinitions>
+                                <Image Margin="4" Source="/ResourceFolder/ImageFolder/Search.png" Height="30" Width="22" Grid.Column="0"/>
+                                <Label x:Name="Search" Content="Поиск..." FontSize="14" Margin="0,0,0,0" 
+                                                  HorizontalContentAlignment="Center" VerticalContentAlignment="Center"
+                                                  Visibility="Collapsed" Grid.Column="1" Foreground="Gray"/>
+                                <ScrollViewer Grid.Column="1" x:Name="PART_ContentHost" Margin="0,0,0,0" HorizontalAlignment="Left" VerticalAlignment="Center"
+                                             Focusable="false" HorizontalScrollBarVisibility="Hidden" VerticalScrollBarVisibility="Hidden"/>
+                            </Grid>
+                        </Border>
+                    </Grid>
+                    <ControlTemplate.Triggers>
+                        <Trigger Property="Text" Value="">
+                            <Setter TargetName="Search" Property="Visibility" Value="Visible"/>
+                        </Trigger>
+                        <Trigger Property="IsEnabled" Value="false">
+                            <Setter Property="Opacity" Value="0.56"/>
+                        </Trigger>
+                    </ControlTemplate.Triggers>
+                </ControlTemplate>
+            </TextBox.Template>
+        </TextBox>
+        <Button x:Name="AddPerformanceBtn" Grid.Column="1"
+                Style="{StaticResource normButton}" Content="Добавить представление" 
+                Margin="12,12,12,0" Background="#E03554" Click="AddPerformanceBtn_Click"/>
+        <DataGrid RowStyle="{DynamicResource DataGridRowStyle1}" AutoGenerateColumns="False"
+              ColumnHeaderStyle="{DynamicResource DataGridColumnHeaderStyle1}" CellStyle="{DynamicResource DataGridCellStyle1}" 
+              x:Name="membersDataGrid" Style="{DynamicResource DataGridStyle1}" Grid.Row="2" Grid.ColumnSpan="2">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="#" IsReadOnly="True" CanUserResize="False" Width="auto" Binding="{Binding IdPerformance}"/>
+                <DataGridTextColumn Header="Название" Binding="{Binding TitlePerformance}" IsReadOnly="True" Width="*" />
+                <DataGridTextColumn Header="Дата" Binding="{Binding DatePerformance}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Цена билета " Binding="{Binding TicketPrice}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Артисты" Binding="{Binding Artists.NameArtists}" IsReadOnly="True" Width="*"/>
+                <DataGridTextColumn Header="Площадка" Binding="{Binding Area.NameArea}" IsReadOnly="True" Width="*"/>
+                <DataGridTemplateColumn Header="Функции" IsReadOnly="True" Width="*">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <StackPanel Orientation="Horizontal">
+                                <Button x:Name="EditPerformanceBtn" Style="{StaticResource gridEditButton}" Click="EditPerformanceBtn_Click">
+                                    <Icon:PackIconMaterial Kind="PencilOutline" Style="{StaticResource gridButtonIcon}" Cursor="Hand"/>
+                                </Button>
+                                <Button x:Name="DeletePerformance" Margin="5 0 0 0" Style="{StaticResource gridRemoveButton}" Click="DeletePerformance_Click">
+                                    <Icon:PackIconMaterial Kind="DeleteOutline" Style="{StaticResource gridButtonIcon}" Cursor="Hand"/>
+                                </Button>
+                            </StackPanel>
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
